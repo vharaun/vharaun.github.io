@@ -32,9 +32,11 @@
                 <select id="newtimestampentry_timecode_type">
                     <option value="Intro">Intro</option>
                     <option value="Main">Main</option>
+                    <option value="Reading">Reading</option>
                     <option value="Outro">Outro</option>
                     <option value="Monologue">Monologue</option>
                     <option value="Funny">Funny</option>
+                    <option value="Conversation">Conversation</option>
                 </select>
                 <input id="newtimestampentry_description">
 
@@ -43,11 +45,14 @@
                     <div id="resetStart" class="roundgreybutton" style="display: inline-block; width:73px;">Reset</div>
                     <div style="display: inline-block; width: 75px;" id="start-time" contenteditable="true">0:00:00</div>
                 </div>
-                
+
                 <div style="display: inline-block;">
                     <div style="display: inline-block; width: 75px;">End Time</div>
                     <div style="display: inline-block; width: 75px;" id="end-time" contenteditable="true">0:00:00</div>
                 </div>
+                <br /><br />
+<div style="display:none;">
+                <pre id="all_markdown"></pre>
 
                 <br /><br />
                 <div>Monologue</div>
@@ -64,17 +69,19 @@
                 <br /><br />
                 <div>Outro</div>
                 <pre id="Outro_markdown"></pre>
+                </div>
             </li>
             <li id="step_4">
                 <div id="main">
-                    <section class="output">
+                    <pre contentEditable="true" id="markdownTemplate"></pre>
+                    <section class="output" style="display:none;">
                         <h3>Action: <span class="action"></span></h3>
                         <h3>Changed: <span class="key"></span></h3>
                     </section>
                     <br />
-                    <button type="button" id="btnSaveTemplate">Save Template</button><br />
-                    <button type="button" id="btnUpdateTemplate">Replace Entries</button><br />
-                    <pre contentEditable="true" id="markdownTemplate"></pre>
+                    <button type="button" id="btnSaveTemplate" style="display:none;">Save Template</button><br />
+                    <button type="button" id="btnUpdateTemplate" style="display:none;">Replace Entries</button><br />
+
                 </div>
             </li>
         </ul>

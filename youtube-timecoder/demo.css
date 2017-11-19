@@ -51,7 +51,7 @@ header a{
 }
 
 #controls{
-    margin-right: 40%;
+    margin-right: 30%;
 }
 
 #controls ul{
@@ -64,7 +64,7 @@ header a{
 }
 
 #controls ul li {
-    margin: 40px;
+    margin: 25px;
 }
 
 #controls ul li code{

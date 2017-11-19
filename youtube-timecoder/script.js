@@ -13,15 +13,22 @@ var Templates = {
     '\n' +
     '\n----' +
     '\n' +
+    '\n## To Keep' +
+    '\n| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |' +
+    '\n| ----------------- | -------------- | --------------------------------------- |' +
+    '\n{All_Entry}' +
+    /*'\n' +
+    '\n----' +
+    '\n' +
     '\n## Extra' +
     '\n### Monologues' +
-    '\n| Description | Start Time | End Time | Duration |' +
-    '\n| ----------- | ---------- | -------- | -------- |' +
+    '\n| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |' +
+    '\n| ----------------- | -------------- | --------------------------------------- |' +
     '\n{Monologue_Entry}' +
     '\n' +
     '\n### Funny Snippets' +
-    '\n| Description | Start Time | End Time | Duration |' +
-    '\n| ----------- | ---------- | -------- | -------- |' +
+    '\n| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |' +
+    '\n| ----------------- | -------------- | --------------------------------------- |' +
     '\n{Funny_Snippets_Entry}' +
     '\n' +
     '\n#' +
@@ -29,19 +36,20 @@ var Templates = {
     '\n' +
     '\n## Outline' +
     '\n### Intro' +
-    '\n| Description | Start Time | End Time | Duration |' +
-    '\n| ----------- | ---------- | -------- | -------- |' +
+    '\n| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |' +
+    '\n| ----------------- | -------------- | --------------------------------------- |' +
     '\n{Intro_Entry}' +
     '\n' +
     '\n### Main Video' +
-    '\n| Description | Start Time | End Time | Duration |' +
-    '\n| ----------- | ---------- | -------- | -------- |' +
+    '\n| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |' +
+    '\n| ----------------- | -------------- | --------------------------------------- |' +
     '\n{Main_Video_Entry}' +
     '\n' +
     '\n### Outro' +
-    '\n| Description | Start Time | End Time | Duration |' +
-    '\n| ----------- | ---------- | -------- | -------- |' +
-    '\n{Outro_Entry}',
+    '\n| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |' +
+    '\n| ----------------- | -------------- | --------------------------------------- |' +
+    '\n{Outro_Entry}' + */
+    '\n',
     LineTemplate: ' | {Description} | {Start_Time} | {End_Time} | {Duration} |\n',
     Video_Link_Line_Template: 'Full Video: [Link]({Video_Link})',
     Show_Notes_Link_LineTemplate: 'Show Notes: [Link]({Show_Notes_Link})',
@@ -109,11 +117,12 @@ function updateTemplateOutput() {
     else {
         tupdate = tupdate.replace('{Show_Notes_Link_LineTemplate}', Templates.Show_Notes_Link_LineTemplate.replace('{Show_Notes_Link}', timecodecontainer.video_url));
     }
-    tupdate = tupdate.replace('{Monologue_Entry}', $('#Monologue_markdown').html().replace('| Description | Start&nbsp;Time | End&nbsp;Time | Duration |\n| ----------- | ---------- | -------- | -------- |\n', ''));
-    tupdate = tupdate.replace('{Funny_Snippets_Entry}', $('#Funny_markdown').html().replace('| Description | Start&nbsp;Time | End&nbsp;Time | Duration |\n| ----------- | ---------- | -------- | -------- |\n', ''));
-    tupdate = tupdate.replace('{Intro_Entry}', $('#Intro_markdown').html().replace('| Description | Start&nbsp;Time | End&nbsp;Time | Duration |\n| ----------- | ---------- | -------- | -------- |\n', ''));
-    tupdate = tupdate.replace('{Main_Video_Entry}', $('#Main_markdown').html().replace('| Description | Start&nbsp;Time | End&nbsp;Time | Duration |\n| ----------- | ---------- | -------- | -------- |\n', ''));
-    tupdate = tupdate.replace('{Outro_Entry}', $('#Outro_markdown').html().replace('| Description | Start&nbsp;Time | End&nbsp;Time | Duration |\n| ----------- | ---------- | -------- | -------- |\n', ''));
+    tupdate = tupdate.replace('{All_Entry}', $('#all_markdown').html().replace('| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |\n| ----------------- | -------------- | --------------------------------------- |\n', ''));
+    tupdate = tupdate.replace('{Monologue_Entry}', $('#Monologue_markdown').html().replace('| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |\n| ----------------- | -------------- | --------------------------------------- |\n', ''));
+    tupdate = tupdate.replace('{Funny_Snippets_Entry}', $('#Funny_markdown').html().replace('| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |\n| ----------------- | -------------- | --------------------------------------- |\n', ''));
+    tupdate = tupdate.replace('{Intro_Entry}', $('#Intro_markdown').html().replace('| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |\n| ----------------- | -------------- | --------------------------------------- |\n', ''));
+    tupdate = tupdate.replace('{Main_Video_Entry}', $('#Main_markdown').html().replace('| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |\n| ----------------- | -------------- | --------------------------------------- |\n', ''));
+    tupdate = tupdate.replace('{Outro_Entry}', $('#Outro_markdown').html().replace('| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |\n| ----------------- | -------------- | --------------------------------------- |\n', ''));
 
     $('#markdownTemplate').html(tupdate);
 }
@@ -134,7 +143,8 @@ function initialize() {
         currentTimeCodeEntry.description = $('#newtimestampentry_description').val();
         currentTimeCodeEntry.timecode_type = $('#newtimestampentry_timecode_type').val();
         currentTimeCodeEntry.duration = convertSecondsToHHMMSS(currentTimeCodeEntry.endDuration - currentTimeCodeEntry.startDuration);
-        var tempString = ('| ' + $('#newtimestampentry_description').val() + ' | ' + currentTimeCodeEntry.starttime + ' | ' + currentTimeCodeEntry.endtime + ' | ' + currentTimeCodeEntry.duration + ' |\n');
+        var timecode_type_string = ' [' + currentTimeCodeEntry.timecode_type + '] '; timecode_type_string = timecode_type_string + "             ".substring(timecode_type_string.length);
+        var tempString = ('| ' + currentTimeCodeEntry.starttime + ' - ' + currentTimeCodeEntry.endtime + ' |' + timecode_type_string + '| ' + $('#newtimestampentry_description').val() + ' |\n');
 
         switch (currentTimeCodeEntry.timecode_type) {
             case 'Intro':
@@ -154,6 +164,8 @@ function initialize() {
                 break;
         }
 
+        $('#all_markdown').append(tempString);
+
         timecodecontainer.timecodes.push(currentTimeCodeEntry);
         currentTimeCodeEntry = new timecodeentry(Math.round(player.getCurrentTime()));
         $('#start-time').text(formatTime(player.getCurrentTime()));
@@ -165,11 +177,12 @@ function initialize() {
         $('#start-time').text(formatTime(currentTimeCodeEntry.startDuration));
     });
     //$('#markdownTemplate').html(Templates.FullTemplate);
-    $('#Monologue_markdown').html('| Description | Start&nbsp;Time | End&nbsp;Time | Duration |\n| ----------- | ---------- | -------- | -------- |\n');
-    $('#Funny_markdown').html('| Description | Start&nbsp;Time | End&nbsp;Time | Duration |\n| ----------- | ---------- | -------- | -------- |\n');
-    $('#Intro_markdown').html('| Description | Start&nbsp;Time | End&nbsp;Time | Duration |\n| ----------- | ---------- | -------- | -------- |\n');
-    $('#Main_markdown').html('| Description | Start&nbsp;Time | End&nbsp;Time | Duration |\n| ----------- | ---------- | -------- | -------- |\n');
-    $('#Outro_markdown').html('| Description | Start&nbsp;Time | End&nbsp;Time | Duration |\n| ----------- | ---------- | -------- | -------- |\n');
+    $('#all_markdown').html('| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |\n| ----------------- | -------------- | --------------------------------------- |\n');
+    $('#Monologue_markdown').html('| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |\n| ----------------- | -------------- | --------------------------------------- |\n');
+    $('#Funny_markdown').html('| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |\n| ----------------- | -------------- | --------------------------------------- |\n');
+    $('#Intro_markdown').html('| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |\n| ----------------- | -------------- | --------------------------------------- |\n');
+    $('#Main_markdown').html('| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |\n| ----------------- | -------------- | --------------------------------------- |\n');
+    $('#Outro_markdown').html('| Start - Stop Time | Category       | [Name] [Summary] [relevance to topic]   |\n| ----------------- | -------------- | --------------------------------------- |\n');
     $('#video_id').on("click", function () {
         player.loadVideoById(YouTubeGetID($('#videoid').val()));
         //$('#shownotes').val()
@@ -185,7 +198,7 @@ function initialize() {
     $('#btnUpdateTemplate').on("click", function () {
         updateTemplateOutput();
     });
-    
+
 }
 
 // This function is called by initialize()
